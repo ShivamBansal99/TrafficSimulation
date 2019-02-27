@@ -24,7 +24,7 @@ VehiclePos::VehiclePos(int redline, int roadwidth,int roadlength) {
 void VehiclePos::addVehicle(vehicle* v){
     VehiclePos::allvehicles.push_front(v);
 }
-//TODO: avail ot not to be completed
+//TODO: avail or not to be completed
 bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
         if( (( (*(*it)).posx - (*(*it)).length < xright ) && ( (*(*it)).posy - (*(*it)).width < yup )) && (( (*(*it)).posx  > xleft ) && ( (*(*it)).posy  > ydown )) ) {
