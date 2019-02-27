@@ -12,22 +12,34 @@
  */
 
 #include <cstdlib>
-#include <vehicle.h>
-#include <unistd.h>
+#include <iostream>
+#include "vehicle.h"
+#include <string>
 
+#include "VehiclePos.h"
 using namespace std;
 
 /*
  * 
  */
 int main(int argc, char** argv) {
+    vehicle* car= new vehicle("white","car",1,1,0,0, 5,4,0,0,1);
+    VehiclePos* vp = new VehiclePos(60,5,10);
+    (*vp).addVehicle(car);
+    int k=0;
     do
     {
-       usleep(3000000);
-        
-       
+        (*vp).moveall();
+        for(int i=0;i<(*vp).roadwidth;i++){
+            for(int j=0;j<(*vp).roadlength;j++){
+                cout<<(*vp).position(j,i)<<',';
+            }
+            cout<<'\n';
+        }
+        cout<<'\n';
+        k++;
     }
-    while(0);
+    while(k<10);
     return 0;
 }
 

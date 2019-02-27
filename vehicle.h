@@ -14,15 +14,17 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 #include <cstdlib>
+#include<string>
 using namespace std;
 class vehicle {
 public:
+    vehicle(string color,string name,int acc,int maxvel,int posx,int posy, int length,int width,int speed,int lcFreq,int time);
     vehicle();
-    vehicle(const vehicle& orig);
     virtual ~vehicle();
-    movex();
-    movey(int posyavail[]);
+    void movex();
+    void movey(int y);
     string color;
+    string name;
     int acc,maxvel,posx,posy;
     int length,width,speed,lcFreq,time;
 private:

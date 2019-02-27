@@ -12,28 +12,38 @@
  */
 
 #include <cstdlib>
-#include <vehicle.h>
+#include "vehicle.h"
 using namespace std;
 
-vehicle::vehicle() {
+vehicle::vehicle(string color,string name,int acc,int maxvel,int posx,int posy, int length,int width,int speed,int lcFreq,int time) {
+    vehicle::color=color;
+    vehicle::name=name;
+    vehicle::acc=acc;
+    vehicle::maxvel=maxvel;
+    vehicle::posx=posx;
+    vehicle::posy=posy;
+    vehicle::length=length;
+    vehicle::width=width;
+    vehicle::speed=speed;
+    vehicle::lcFreq=lcFreq;
+    vehicle::time=time;
 }
 
-vehicle::vehicle(const vehicle& orig) {
+vehicle::vehicle() {
 }
 
 vehicle::~vehicle() {
 }
 
-vehicle::movex() {
+void vehicle::movex() {
     vehicle::posx+=vehicle::speed*vehicle::time;
     if(vehicle::speed<vehicle::maxvel){
         vehicle::speed+=vehicle::acc*vehicle::time;
     }
 }
 
-vehicle::movey(int availPosy[]) {
-    random_shuffle(availPosy, availPosy+sizeof(availPosy)/sizeof(*availPosy));
-    vehicle:: = availPosy[0];
+void vehicle::movey(int y) {
+    vehicle::posy += y;
 }
 
 

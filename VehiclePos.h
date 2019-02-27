@@ -13,17 +13,19 @@
 
 #ifndef VEHICLEPOS_H
 #define VEHICLEPOS_H
-#include <vehicle.h>
+#include "vehicle.h"
 #include <list>
 class VehiclePos {
 public:
     int redline;
-    list<vehicle> allvehicles;
-    addVehicle(vehicle v);
-    bool availornot(int x, int y);
-    moveall();
+    list<vehicle*> allvehicles;
+    int roadwidth,roadlength;
+    void addVehicle(vehicle* v);
+    bool availornot(int xleft,int xright,int yup,int ydown);
+    char position(int x, int y);
+    void moveall();
+    VehiclePos(int redline, int roadwidth,int roadlength);
     VehiclePos();
-    VehiclePos(const VehiclePos& orig);
     virtual ~VehiclePos();
 private:
 
