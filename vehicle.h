@@ -20,11 +20,13 @@ public:
     vehicle();
     vehicle(const vehicle& orig);
     virtual ~vehicle();
-    move(float posyavail[]);
+    movex();
+    movey(int posyavail[]);
     string color;
+    int acc,maxvel,posx,posy;
+    int length,width,speed,lcFreq,time;
 private:
-    float acc,maxvel,posx,posy;
-    float length,width,speed,lcFreq,time;
+    
     
 };
 

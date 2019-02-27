@@ -24,14 +24,16 @@ vehicle::vehicle(const vehicle& orig) {
 vehicle::~vehicle() {
 }
 
-vehicle::move(float availPosy[]) {
-    if((rand%100)/100 < vehicle::lcFreq){
-        random_shuffle(availPosy, availPosy+sizeof(availPosy)/sizeof(*availPosy));
-        vehicle:: = availPosy[0];
-    }
+vehicle::movex() {
     vehicle::posx+=vehicle::speed*vehicle::time;
     if(vehicle::speed<vehicle::maxvel){
         vehicle::speed+=vehicle::acc*vehicle::time;
     }
 }
+
+vehicle::movey(int availPosy[]) {
+    random_shuffle(availPosy, availPosy+sizeof(availPosy)/sizeof(*availPosy));
+    vehicle:: = availPosy[0];
+}
+
 

@@ -13,13 +13,21 @@
 
 #include <cstdlib>
 #include <vehicle.h>
+#include <unistd.h>
+
 using namespace std;
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-
+    do
+    {
+       usleep(3000000);
+        
+       
+    }
+    while(0);
     return 0;
 }
 
