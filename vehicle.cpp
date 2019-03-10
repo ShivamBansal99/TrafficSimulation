@@ -40,6 +40,9 @@ void vehicle::movex() {
     if(vehicle::speed<vehicle::maxvel){
         vehicle::speed+=vehicle::acc*vehicle::time;
     }
+    if(vehicle::speed>vehicle::maxvel){
+        vehicle::speed=vehicle::maxvel;
+    }
 }
 
 void vehicle::movey(int y) {

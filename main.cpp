@@ -23,13 +23,15 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    vehicle* car= new vehicle("white","car",1,1,0,0, 5,4,0,0,1);
+    vehicle* car= new vehicle("white","car",1,1,0,0, 5,4,0,50,1);
+    vehicle* truck= new vehicle("white","truck",1,1,2,1, 5,4,0,100,1);
     VehiclePos* vp = new VehiclePos(60,5,10);
     (*vp).addVehicle(car);
+    (*vp).addVehicle(truck);
     int k=0;
     do
     {
-        (*vp).moveall();
+        
         for(int i=0;i<(*vp).roadwidth;i++){
             for(int j=0;j<(*vp).roadlength;j++){
                 cout<<(*vp).position(j,i)<<',';
@@ -38,6 +40,7 @@ int main(int argc, char** argv) {
         }
         cout<<'\n';
         k++;
+        (*vp).moveall();
     }
     while(k<10);
     return 0;
