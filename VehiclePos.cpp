@@ -41,10 +41,18 @@ char VehiclePos::position(int x,int y){
     if(x==VehiclePos::redline){
         return '|';
     }
+    char res=' ';
+    int count=0;
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
         if( (( (*(*it)).posx  <= x ) && ( (*(*it)).posy + (*(*it)).width > y )) && (( (*(*it)).posx+ (*(*it)).length  > x ) && ( (*(*it)).posy   < y )) ) {
-            return (*(*it)).name.at(0);
+            res=(*(*it)).name.at(0);
+            count++;
         }
+    }
+    if(count>1){
+        return '$';
+    }else{
+        return res;
     }
     return ' ';
 }
@@ -55,15 +63,18 @@ void VehiclePos::moveall(){
         if(VehiclePos::availornot((*(*it)).posx+ (*(*it)).length+1,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width) ) {
             (*(*it)).movex();
         }
-        srand(time(0));
-        if(rand()%100<(*it)->lcFreq){
-            int nexty=(*(*it)).posy+(*(*it)).width+1;
-            if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
-                (*(*it)).movey(1);
-            }else{
-                nexty=(*(*it)).posy-1;
-                if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
-                    (*(*it)).movey(-1);
+        else{
+            srand(time(0));
+            if(rand()%100<(*it)->lcFreq){
+                int nextx=(*(*it)).posx+ (*(*it)).length+(*(*it)).speed*(*(*it)).time;
+                int nexty=(*(*it)).posy+(*(*it)).width+1;
+                if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) && (nextx<VehiclePos::redline) ) {
+                    (*(*it)).movey(1);
+                }else{
+                    nexty=(*(*it)).posy-1;
+                    if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
+                        (*(*it)).movey(-1);
+                    }
                 }
             }
         }
