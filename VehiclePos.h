@@ -19,11 +19,12 @@ class VehiclePos {
 public:
     int redline;
     list<vehicle*> allvehicles;
-    int roadwidth,roadlength;
+    int roadwidth,roadlength,redlight;
     void addVehicle(vehicle* v);
     bool availornot(int xleft,int xright,int yup,int ydown);
     char position(int x, int y);
     void moveall();
+    void setRedLight(int i);
     VehiclePos(int redline, int roadwidth,int roadlength);
     VehiclePos();
     virtual ~VehiclePos();

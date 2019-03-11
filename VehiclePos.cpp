@@ -25,9 +25,12 @@ void VehiclePos::addVehicle(vehicle* v){
     VehiclePos::allvehicles.push_front(v);
 }
 //TODO: avail or not to be completed
+void VehiclePos::setRedLight(int i){
+    VehiclePos::redlight=i;
+}
 bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
-        if( ((( (*(*it)).posx  < xright ) && ( (*(*it)).posy + (*(*it)).width > yup )) && (( (*(*it)).posx+ (*(*it)).length  > xleft ) && ( (*(*it)).posy   < ydown ))) || ((yup  <0 )) || (ydown>VehiclePos::roadwidth)) {
+        if( ((( (*(*it)).posx  < xright ) && ( (*(*it)).posy + (*(*it)).width > yup )) && (( (*(*it)).posx+ (*(*it)).length  > xleft ) && ( (*(*it)).posy   < ydown ))) || ((yup  <0 )) || (ydown>VehiclePos::roadwidth) || (xright>VehiclePos::redline && VehiclePos::redlight==1)) {
             return false;
         }
     }
@@ -35,6 +38,9 @@ bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
 }
 
 char VehiclePos::position(int x,int y){
+    if(x==VehiclePos::redline){
+        return '|';
+    }
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
         if( (( (*(*it)).posx  <= x ) && ( (*(*it)).posy + (*(*it)).width > y )) && (( (*(*it)).posx+ (*(*it)).length  > x ) && ( (*(*it)).posy   < y )) ) {
             return (*(*it)).name.at(0);
@@ -49,6 +55,7 @@ void VehiclePos::moveall(){
         if(VehiclePos::availornot((*(*it)).posx+ (*(*it)).length+1,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width) ) {
             (*(*it)).movex();
         }
+        srand(time(0));
         if(rand()%100<(*it)->lcFreq){
             int nexty=(*(*it)).posy+(*(*it)).width+1;
             if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
