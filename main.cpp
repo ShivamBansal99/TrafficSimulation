@@ -17,6 +17,7 @@
 #include <string>
 #include<time.h>
 #include "VehiclePos.h"
+#include <unistd.h>
 using namespace std;
 
 /*
@@ -25,8 +26,8 @@ using namespace std;
 int main(int argc, char** argv) {
     vehicle* car= new vehicle("white","car",1,3,0,0, 5,3,0,100,1);
     vehicle* truck= new vehicle("white","truck",1,1,2,1, 5,4,0,100,1);
-    vehicle* truk= new vehicle("white","lruck",1,1,5,3, 5,4,0,100,1);
-    VehiclePos* vp = new VehiclePos(15,10,20);
+    vehicle* truk= new vehicle("white","lruck",1,2,5,3, 5,4,0,100,1);
+    VehiclePos* vp = new VehiclePos(20,10,40);
     (*vp).addVehicle(car);
     (*vp).addVehicle(truck);
     (*vp).addVehicle(truk);
@@ -44,6 +45,7 @@ int main(int argc, char** argv) {
         cout<<'\n';
         k++;
         (*vp).moveall();
+        usleep(300000);
     }
     while(k<50);
     return 0;
