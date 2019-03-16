@@ -62,6 +62,7 @@ void VehiclePos::moveall(){
         int nextx=(*(*it)).posx+ (*(*it)).length+(*(*it)).speed*(*(*it)).time;
         if(VehiclePos::availornot((*(*it)).posx+ (*(*it)).length+1,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width) ) {
             (*(*it)).movex();
+            (*it)->movingLeft=0;
         }
         else{
             (*it)->speed=0;
@@ -69,8 +70,16 @@ void VehiclePos::moveall(){
             if(rand()%100<(*it)->lcFreq && (nextx<VehiclePos::redline)){
                 int nextx=(*(*it)).posx+ (*(*it)).length+(*(*it)).speed*(*(*it)).time;
                 int nexty=(*(*it)).posy+(*(*it)).width+1;
-                if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty)  ) {
-                    (*(*it)).movey(1);
+                srand(time(0));
+                if(rand()%250<200 ) {
+                    if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
+                        (*(*it)).movey(1);
+                    }else{
+                        nexty=(*(*it)).posy-1;
+                        if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
+                            (*(*it)).movey(-1);
+                        }
+                    }
                 }else{
                     nexty=(*(*it)).posy-1;
                     if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {

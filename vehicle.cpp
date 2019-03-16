@@ -27,6 +27,7 @@ vehicle::vehicle(string color,string name,int acc,int maxvel,int posx,int posy, 
     vehicle::speed=speed;
     vehicle::lcFreq=lcFreq;
     vehicle::time=time;
+    vehicle::movingLeft=0;
 }
 
 vehicle::vehicle() {

@@ -25,7 +25,7 @@ public:
     void movey(int y);
     string color;
     string name;
-    int acc,maxvel,posx,posy;
+    int acc,maxvel,posx,posy,movingLeft;
     int length,width,speed,lcFreq,time;
 private:
     

@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     (*vp).setRedLight(1);
     do
     {
-        if(k==25 ) (*vp).setRedLight(0);
+        if(k==30 ) (*vp).setRedLight(0);
         for(int i=0;i<(*vp).roadwidth;i++){
             for(int j=0;j<(*vp).roadlength;j++){
                 cout<<(*vp).position(j,i)<<',';
