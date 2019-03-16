@@ -23,9 +23,9 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    vehicle* car= new vehicle("white","car",1,1,0,0, 5,4,0,100,1);
+    vehicle* car= new vehicle("white","car",1,3,0,0, 5,3,0,100,1);
     vehicle* truck= new vehicle("white","truck",1,1,2,1, 5,4,0,100,1);
-    vehicle* truk= new vehicle("white","truck",1,1,5,3, 5,4,0,100,1);
+    vehicle* truk= new vehicle("white","lruck",1,1,5,3, 5,4,0,100,1);
     VehiclePos* vp = new VehiclePos(15,10,20);
     (*vp).addVehicle(car);
     (*vp).addVehicle(truck);

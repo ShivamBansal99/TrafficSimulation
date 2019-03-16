@@ -64,6 +64,7 @@ void VehiclePos::moveall(){
             (*(*it)).movex();
         }
         else{
+            (*it)->speed=0;
             srand(time(0));
             if(rand()%100<(*it)->lcFreq && (nextx<VehiclePos::redline)){
                 int nextx=(*(*it)).posx+ (*(*it)).length+(*(*it)).speed*(*(*it)).time;
