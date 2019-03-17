@@ -38,7 +38,7 @@ bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
 }
 int VehiclePos::availy(int width){
     for(int i=0;i<VehiclePos::roadwidth-width;i++){
-        if(VehiclePos::availornot(0,1,i,i+width-1)){
+        if(VehiclePos::availornot(0,1,i,i+width)){
             return i;
         }
     }
@@ -68,7 +68,7 @@ char VehiclePos::position(int x,int y){
 void VehiclePos::moveall(){
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
         int nextx=(*(*it)).posx+ (*(*it)).length+(*(*it)).speed*(*(*it)).time;
-        if(VehiclePos::availornot((*(*it)).posx+ (*(*it)).length+1,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width) ) {
+        if(VehiclePos::availornot((*(*it)).posx+ (*(*it)).length,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width) ) {
             (*(*it)).movex();
             (*it)->movingLeft=0;
         }
@@ -80,17 +80,17 @@ void VehiclePos::moveall(){
                 int nexty=(*(*it)).posy+(*(*it)).width+1;
                 srand(time(0));
                 if(rand()%250<200 ) {
-                    if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
+                    if(VehiclePos::availornot((*(*it)).posx+1,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
                         (*(*it)).movey(1);
                     }else{
                         nexty=(*(*it)).posy-1;
-                        if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
+                        if(VehiclePos::availornot((*(*it)).posx+1,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
                             (*(*it)).movey(-1);
                         }
                     }
                 }else{
                     nexty=(*(*it)).posy-1;
-                    if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
+                    if(VehiclePos::availornot((*(*it)).posx+1,(*(*it)).posx+(*(*it)).length,nexty,nexty) ) {
                         (*(*it)).movey(-1);
                     }
                 }

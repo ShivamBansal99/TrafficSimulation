@@ -138,8 +138,8 @@ int main(int argc, char** argv) {
     vehicle *vehcl = new vehicle[100];
     int vehcl_count=0;
 	scan(spec,types,seconds) ;
-        (*vp).roadlength=spec[0][2]*2;
-        (*vp).roadwidth=spec[0][3];
+        (*vp).roadlength=spec[0][1]/50;
+        (*vp).roadwidth=spec[0][2]*spec[0][3]/10;
             loop(i,spec.size()) {
                 
                 if(i>=3){
