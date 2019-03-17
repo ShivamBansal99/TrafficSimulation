@@ -12,7 +12,6 @@
  */
 
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
 #include "vehicle.h"
 #include <string>
@@ -121,17 +120,41 @@ void start(int argc, char** argv){
 	glutMainLoop() ;
 	
 }*/
+vector<string> split(const string& s, char delimiter)
+{
+   vector<string> tokens;
+   string token;
+   istringstream tokenStream(s);
+   while (getline(tokenStream, token, delimiter))
+   {
+      tokens.push_back(token);
+   }
+   return tokens;
+}
 int main(int argc, char** argv) {
+    
     specs *specific=new specs[100];
+    int specs_count=0;
     vehicle *vehcl = new vehicle[100];
+    int vehcl_count=0;
 	scan(spec,types,seconds) ;
+        (*vp).roadlength=spec[0][2]*2;
+        (*vp).roadwidth=spec[0][3]/2;
             loop(i,spec.size()) {
+                
                 if(i>=3){
                     if(spec[i].size()==4){
-                        specific[i].set_specs(types[i],spec[i][0],spec[i][1],spec[i][2],spec[i][3],100,1);
+                        //cout<<types[i]<<spec[i][0]<<spec[i][1]<<spec[i][2]<<spec[i][3];
+                        specific[specs_count].set_specs(types[i],spec[i][0],spec[i][1],spec[i][2],spec[i][3],100,1);
+                        cout<<specific[specs_count].width<<'\n';
+                        specs_count++;
                     }
                     else if(spec[i].size()==2){
-                        specific[i].set_specs(types[i],spec[i][0],spec[i][1],10,10,100,1);
+                        specific[specs_count].set_specs(types[i],spec[i][0],spec[i][1],10,10,100,1);
+                        cout<<specific[specs_count].width<<'\n';
+                        specs_count++;
+                        specs_count++;
+                        // cout<<specific[i].name;
                     }
                     else{
                         cout<<"check conf file";
@@ -140,20 +163,47 @@ int main(int argc, char** argv) {
                 }
                 
 	}
-
-        
-    //FOR BANSAL: TWO PRINTS FUNCTION WORKING RIGHT NOW, One in last of scan, other in MOVE FUNCTION AT THE TOP 
-	vehicle* car= new vehicle("pink","car",1,5,0,1,1,4,2,100,1);
-    vehicle* truck= new vehicle("yellow","truck",1,5,2,1,1,1,1,100,1);
-    vehicle* super= new vehicle("blue","super",3,1,3,4,1,4,0,100,1);
-	vehicle* ambulance= new vehicle("brown","ambulance",1,5,3,3,2,4,3,100,1);
-   (*vp).addVehicle(super) ;
-   (*vp).addVehicle(car);
-   (*vp).addVehicle(truck);
-	(*vp).addVehicle(ambulance);
     int k=0;
     (*vp).setRedLight(1);
-	start(argc, argv) ;
+    int readline=1;
+    int stop_time=0;
+	 do
+    {
+        if(stop_time==0){
+                //cout<<seconds[readline][0];
+            if(seconds[readline][0]=="Pass"){
+                stop_time=stoi(seconds[readline][1]);
+            }if(seconds[readline][0]=="Signal"){
+                if(seconds[readline][1]=="GREEN")   (*vp).setRedLight (0);
+                else (*vp).setRedLight (1);
+            }else{
+                loop(i,specs_count){
+                    cout<<specific[i].name<<'\n';
+                    if(specific[i].name==seconds[readline][0]){
+                        vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],0,stoi(seconds[readline][2]),0);
+                        (*vp).addVehicle(&vehcl[vehcl_count]);
+                        vehcl_count++;
+                        cout<<vehcl[vehcl_count-1].length;
+                    }
+                }
+            }
+        }
+        else{
+            stop_time--;
+        }
+        for(int i=0;i<(*vp).roadwidth;i++){
+            for(int j=0;j<(*vp).roadlength;j++){
+                cout<<(*vp).position(j,i)<<',';
+            }
+            cout<<'\n';
+        }
+        cout<<'\n';
+        k++;
+        (*vp).moveall();
+        usleep(300000);
+        readline++;
+    }
+    while(readline<seconds.size() || stop_time!=0);
 	
     return 0;
 }

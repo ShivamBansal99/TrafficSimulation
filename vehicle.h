@@ -20,7 +20,7 @@ using namespace std;
 class vehicle {
 public:
     vehicle(string color,string name,int acc,int maxvel,int posx,int posy, int length,int width,int speed,int lcFreq,int time);
-    vehicle(specs s,string color,int posx,int posy,int speed);
+    void new_vehicle(specs* s,string color,int posx,int posy,int speed);
     virtual ~vehicle();
     vehicle();
     void movex();
