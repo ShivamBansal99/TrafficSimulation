@@ -153,7 +153,6 @@ int main(int argc, char** argv) {
                         specific[specs_count].set_specs(types[i],1,1,spec[i][0],spec[i][1],100,1);
                         cout<<specific[specs_count].width<<'\n';
                         specs_count++;
-                        specs_count++;
                         // cout<<specific[i].name;
                     }
                     else{
@@ -184,7 +183,7 @@ int main(int argc, char** argv) {
                 loop(i,specs_count){
                     cout<<specific[i].name<<'\n';
                     if(specific[i].name==seconds[readline][0]){
-                        if((*vp).availy(specific[i].width)!=-2){
+                        if((*vp).availy(specific[i].width)!=-100){
                             vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],-specific[i].length+1,(*vp).availy(specific[i].width),1);
                             (*vp).addVehicle(&vehcl[vehcl_count]);
                             vehcl_count++;
