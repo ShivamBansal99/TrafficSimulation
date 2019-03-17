@@ -12,9 +12,11 @@
  */
 
 #include <cstdlib>
+#include <GL/glut.h>
 #include <iostream>
 #include "vehicle.h"
 #include <string>
+#include <tuple>
 #include<time.h>
 #include "VehiclePos.h"
 #include <unistd.h>
@@ -151,21 +153,8 @@ int main(int argc, char** argv) {
 	(*vp).addVehicle(ambulance);
     int k=0;
     (*vp).setRedLight(1);
-    do
-    {
-        if(k==30 ) (*vp).setRedLight(0);
-        for(int i=0;i<(*vp).roadwidth;i++){
-            for(int j=0;j<(*vp).roadlength;j++){
-                cout<<(*vp).position(j,i)<<',';
-            }
-            cout<<'\n';
-        }
-        cout<<'\n';
-        k++;
-        (*vp).moveall();
-        usleep(300000);
-    }
-    while(k<50);
+	start(argc, argv) ;
+	
     return 0;
 }
 
