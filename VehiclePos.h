@@ -21,6 +21,7 @@ public:
     list<vehicle*> allvehicles;
     int roadwidth,roadlength,redlight;
     void addVehicle(vehicle* v);
+    int availy(int width);
     bool availornot(int xleft,int xright,int yup,int ydown);
     char position(int x, int y);
     void moveall();

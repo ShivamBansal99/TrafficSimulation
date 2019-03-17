@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
 	 do
     {
         if(stop_time==0){
-                //cout<<seconds[readline][0];
+             
             if(seconds[readline][0]=="Pass"){
                 stop_time=stoi(seconds[readline][1]);
             }if(seconds[readline][0]=="Signal"){
@@ -180,7 +180,7 @@ int main(int argc, char** argv) {
                 loop(i,specs_count){
                     cout<<specific[i].name<<'\n';
                     if(specific[i].name==seconds[readline][0]){
-                        vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],0,stoi(seconds[readline][2]),0);
+                        vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],-specific[i].length+1,(*vp).availy(specific[i].width),0);
                         (*vp).addVehicle(&vehcl[vehcl_count]);
                         vehcl_count++;
                         cout<<vehcl[vehcl_count-1].length;

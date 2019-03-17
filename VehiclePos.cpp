@@ -36,6 +36,14 @@ bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
     }
     return true;
 }
+int VehiclePos::availy(int width){
+    for(int i=0;i<VehiclePos::roadwidth-width;i++){
+        if(VehiclePos::availornot(0,1,i,i+width)){
+            return i;
+        }
+    }
+    return 2;
+}
 
 char VehiclePos::position(int x,int y){
     if(x==VehiclePos::redline && VehiclePos::redlight==1){
@@ -51,7 +59,7 @@ char VehiclePos::position(int x,int y){
     }
     if(count>1){
         return '$';
-    }else{
+    }else if(count==1){
         return res;
     }
     return ' ';
