@@ -30,6 +30,21 @@ vehicle::vehicle(string color,string name,int acc,int maxvel,int posx,int posy, 
     vehicle::movingLeft=0;
 }
 
+vehicle::vehicle(specs s,string color,int posx,int posy,int speed) {
+    vehicle::color=color;
+    vehicle::name=s.name;
+    vehicle::acc=s.acc;
+    vehicle::maxvel=s.maxvel;
+    vehicle::posx=posx;
+    vehicle::posy=posy;
+    vehicle::length=s.length;
+    vehicle::width=s.width;
+    vehicle::speed=speed;
+    vehicle::lcFreq=s.lcFreq;
+    vehicle::time=s.time;
+    vehicle::movingLeft=0;
+}
+
 vehicle::vehicle() {
 }
 

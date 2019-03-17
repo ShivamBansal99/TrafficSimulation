@@ -13,9 +13,16 @@
 
 #ifndef SPECS_H
 #define SPECS_H
-
+#include <string>
+#include <cstdlib>
+using namespace std;
 class specs {
 public:
+    string color;
+    string name;
+    int acc,maxvel,posx,posy,movingLeft;
+    int length,width,speed,lcFreq,time;
+    void set_specs(string name,int acc,int maxvel,int length,int width,int lcFreq,int time);
     specs();
     specs(const specs& orig);
     virtual ~specs();

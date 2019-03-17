@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/VehiclePos.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/scan.o \
 	${OBJECTDIR}/specs.o \
 	${OBJECTDIR}/vehicle.o
 
@@ -74,6 +75,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/scan.o: scan.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/scan.o scan.cpp
 
 ${OBJECTDIR}/specs.o: specs.cpp
 	${MKDIR} -p ${OBJECTDIR}

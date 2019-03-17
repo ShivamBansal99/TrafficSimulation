@@ -12,11 +12,23 @@
  */
 
 #include "specs.h"
-
-specs::specs() {
+#include<string>
+#include <cstdlib>
+using namespace std;
+void specs::set_specs(string name,int acc,int maxvel,int length,int width,int lcFreq,int time) {
+    specs::name=name;
+    specs::acc=acc;
+    specs::maxvel=maxvel;
+    specs::length=length;
+    specs::width=width;
+    specs::lcFreq=lcFreq;
+    specs::time=time;
+    specs::movingLeft=0;
 }
 
 specs::specs(const specs& orig) {
+}
+specs::specs() {
 }
 
 specs::~specs() {
