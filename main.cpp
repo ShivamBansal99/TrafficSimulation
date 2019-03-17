@@ -139,18 +139,18 @@ int main(int argc, char** argv) {
     int vehcl_count=0;
 	scan(spec,types,seconds) ;
         (*vp).roadlength=spec[0][2]*2;
-        (*vp).roadwidth=spec[0][3]/2;
+        (*vp).roadwidth=spec[0][3];
             loop(i,spec.size()) {
                 
                 if(i>=3){
                     if(spec[i].size()==4){
                         //cout<<types[i]<<spec[i][0]<<spec[i][1]<<spec[i][2]<<spec[i][3];
-                        specific[specs_count].set_specs(types[i],spec[i][0],spec[i][1],spec[i][2],spec[i][3],100,1);
+                        specific[specs_count].set_specs(types[i],spec[i][3],spec[i][2],spec[i][1],spec[i][0],100,1);
                         cout<<specific[specs_count].width<<'\n';
                         specs_count++;
                     }
                     else if(spec[i].size()==2){
-                        specific[specs_count].set_specs(types[i],spec[i][0],spec[i][1],10,10,100,1);
+                        specific[specs_count].set_specs(types[i],1,1,spec[i][0],spec[i][1],100,1);
                         cout<<specific[specs_count].width<<'\n';
                         specs_count++;
                         specs_count++;
@@ -166,30 +166,50 @@ int main(int argc, char** argv) {
     int k=0;
     (*vp).setRedLight(1);
     int readline=1;
+    int end=0;
+    
     int stop_time=0;
 	 do
     {
-        if(stop_time==0){
+        if(stop_time==0 && readline<seconds.size()){
              
             if(seconds[readline][0]=="Pass"){
                 stop_time=stoi(seconds[readline][1]);
-            }if(seconds[readline][0]=="Signal"){
+            }else if(seconds[readline][0]=="Signal"){
                 if(seconds[readline][1]=="GREEN")   (*vp).setRedLight (0);
                 else (*vp).setRedLight (1);
+            }else if(seconds[readline][0]=="END"){
+                end=1;
             }else{
                 loop(i,specs_count){
                     cout<<specific[i].name<<'\n';
                     if(specific[i].name==seconds[readline][0]){
-                        vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],-specific[i].length+1,(*vp).availy(specific[i].width),0);
-                        (*vp).addVehicle(&vehcl[vehcl_count]);
-                        vehcl_count++;
-                        cout<<vehcl[vehcl_count-1].length;
+                        if((*vp).availy(specific[i].width)!=-2){
+                            vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],-specific[i].length+1,(*vp).availy(specific[i].width),1);
+                            (*vp).addVehicle(&vehcl[vehcl_count]);
+                            vehcl_count++;
+                        }
+                        //cout<<vehcl[vehcl_count-1].length;
                     }
                 }
             }
+            readline++;
         }
         else{
             stop_time--;
+        }
+        bool empty=true;
+        
+        for(auto it=(*vp).allvehicles.begin();it!=(*vp).allvehicles.end();it++) {
+            if((*it)->posx<=((*vp).roadlength)){
+                empty=false;
+                //cout<<(*it)->posx<<' '<<(*vp).roadlength;
+                break;
+            }
+		
+	}
+        if(end==1 && empty){
+            break;
         }
         for(int i=0;i<(*vp).roadwidth;i++){
             for(int j=0;j<(*vp).roadlength;j++){
@@ -200,10 +220,11 @@ int main(int argc, char** argv) {
         cout<<'\n';
         k++;
         (*vp).moveall();
-        usleep(300000);
-        readline++;
+        usleep(30000);
+       // cout<<empty<<' '<<end<<'\n';
+        
     }
-    while(readline<seconds.size() || stop_time!=0);
+    while(1);
 	
     return 0;
 }

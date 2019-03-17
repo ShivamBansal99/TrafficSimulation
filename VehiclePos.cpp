@@ -38,11 +38,11 @@ bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
 }
 int VehiclePos::availy(int width){
     for(int i=0;i<VehiclePos::roadwidth-width;i++){
-        if(VehiclePos::availornot(0,1,i,i+width)){
+        if(VehiclePos::availornot(0,1,i,i+width-1)){
             return i;
         }
     }
-    return 2;
+    return -100;
 }
 
 char VehiclePos::position(int x,int y){
