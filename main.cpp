@@ -12,42 +12,143 @@
  */
 
 #include <cstdlib>
+#include <GL/glut.h>
 #include <iostream>
 #include "vehicle.h"
 #include <string>
+#include <tuple>
 #include<time.h>
 #include "VehiclePos.h"
 #include <unistd.h>
+#include "scan.h"
+
+#define loop(a,b) for(int a=0;a<b;a++)
 using namespace std;
 
 /*
+
  * 
  */
+VehiclePos* vp = new VehiclePos(800,1000,1000);
+long long unit =0 ;
+vector< vector<int>> spec ;			 
+vector<string> types; 	
+vector< vector<string>> seconds ;
+
+tuple<float,float,float> colorconv(string a){
+	if(!a.compare("red")) return make_tuple((float)247.0/255.0,(float)81.0/255.0,(float) 81.0/255.0) ;	
+	if(!a.compare("blue")) return make_tuple((float)81/255.0,(float)205/255.0,(float)247/255.0) ;
+	if(!a.compare("green")) return make_tuple((float)136/255.0,(float)247/255.0,(float)81/255.0) ;
+	if(!a.compare("purple")) return make_tuple((float)240/255.0,(float)111/255.0,(float)247/255.0) ;
+	if(!a.compare("yellow")) return make_tuple((float)247/255.0,(float)236/255.0,(float)111/255.0) ;
+	if(!a.compare("brown")) return make_tuple((float)150/255.0,(float)99/255.0,(float)66/255.0) ;
+	if(!a.compare("black")) return make_tuple((float)48/255.0,(float)43/255.0,(float)40/255.0) ;
+	}
+void move(){
+	unit++ ;
+	(*vp).moveall() ;
+	//cout<<unit<<endl ;
+}
+void environment(){
+		int length=spec[0][1] ;
+		int width = spec[0][2]*spec[0][3] ;
+		int lanes=spec[0][2] ;
+		glBegin(GL_QUADS);
+		glColor3f(0,0,0) ;
+    		glVertex2f(0,width);
+    		glVertex2f(length,width);
+    		glVertex2f(length,width+5);
+    		glVertex2f(0,width+5);
+		glEnd() ;
+		glBegin(GL_QUADS);
+		glColor3f(0,0,0) ;
+    		glVertex2f(0,0);
+    		glVertex2f(length,0);
+    		glVertex2f(length,-5);
+    		glVertex2f(0,-5);
+		glEnd() ;	
+		//loop(i,)
+}
+void diveh(int x, int y, int l, int b, tuple<float,float,float> color){
+		//cout<< get<0> (color)<< get<1> (color)<<get<2> (color)<<endl ;
+		//
+	glBegin(GL_QUADS);
+		glColor3f(get<0> (color),get<1> (color),get<2> (color)) ;
+    		glVertex2f(x,y);
+    		glVertex2f(x+l,y);
+    		glVertex2f(x+l,y+b);
+    		glVertex2f(x,y+b);
+	glEnd() ;
+}
+void display() {
+	list <vehicle*> allv = (*vp).allvehicles ;
+	list <vehicle*> :: iterator it; int n= allv.size() ;
+	int times=0;
+	glClear(GL_COLOR_BUFFER_BIT);
+	environment() ;
+	for(it=allv.begin();it!=allv.end();it++) {
+		
+		diveh((*it)->posx,(*it)->posy,(*it)->length,(*it)->width,colorconv((*it)->color)) ;
+	}
+	//glTranslatef(xg,yg,0.0f) ;
+
+	glFlush() ;
+	glutPostRedisplay() ;
+	glutSwapBuffers();
+	move() ;
+	usleep(10000);
+	//cout<<xg<<" "<<yg<<" "<<l<<" "<<b<<endl ;
+	//times++ ;cout<<times<<endl ;
+}
+
+void start(int argc, char** argv){
+	int road_len=spec[0][1] ;
+	int road_width = spec[0][2]*spec[0][3] ;
+	int lanes=spec[0][2] ;
+	(*vp).roadwidth=road_width ;
+	(*vp).redline=spec[0][4] ;
+    glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100,100);
+	 glutInitWindowSize(1000,800);
+	glutCreateWindow("Lighthouse3D- GLUT Tutorial");
+
+	glutDisplayFunc(display);
+	//glutIdleFunc(callglut);
+	glClearColor(1.0f,1.0f,1.0f,0.0f);
+	gluOrtho2D(0,road_len,-(800-road_width)/2,(road_width+800)/2) ; //workout later ;
+	//gluOrtho2D(0,800,0,800) ;
+	//glutSpecialFunc(Event) ;
+	glutMainLoop() ;
+	
+}
 int main(int argc, char** argv) {
-    vehicle* car= new vehicle("white","car",1,3,0,0, 5,3,0,100,1);
-    vehicle* truck= new vehicle("white","truck",1,1,2,1, 5,4,0,100,1);
-    vehicle* truk= new vehicle("white","lruck",1,2,5,3, 5,4,0,100,1);
-    VehiclePos* vp = new VehiclePos(20,10,40);
-    (*vp).addVehicle(car);
-    (*vp).addVehicle(truck);
-    (*vp).addVehicle(truk);
+	scan(spec,types,seconds) ;
+/*	loop(i,spec.size()) {
+		loop(j,spec[i].size()){
+			cout<<spec[i][j]<<" " ;
+		}
+	cout<<endl ;
+	}*/
+    //FOR BANSAL: TWO PRINTS FUNCTION WORKING RIGHT NOW, One in last of scan, other in MOVE FUNCTION AT THE TOP 
+	vector< vehicle> all(0) ;
+	/*for(int i=3;i<spec.size();i++){
+		all.push_back(new vehicle("black",types[i],spec[1][1],spec[1][0],0,0,spec[i][0],spec[i][1]),spec[1][2],100,1);		//color,position not specified yet
+		if(spec[i].size()>3)all[i-3].
+	}*/
+	vehicle* car= new vehicle("purple","car",0,5,0,160,100,200,2,100,1);
+    vehicle* truck= new vehicle("yellow","truck",0,5,240,150,100,100,1,100,1);
+    vehicle* super= new vehicle("blue","super",3,10,30,400,10,40,0,100,1);
+	vehicle* ambulance= new vehicle("brown","ambulance",0,5,30,300,200,40,3,100,1);
+   (*vp).addVehicle(super) ;
+   (*vp).addVehicle(car);
+   (*vp).addVehicle(truck);
+	(*vp).addVehicle(ambulance);
     int k=0;
     (*vp).setRedLight(1);
-    do
-    {
-        if(k==30 ) (*vp).setRedLight(0);
-        for(int i=0;i<(*vp).roadwidth;i++){
-            for(int j=0;j<(*vp).roadlength;j++){
-                cout<<(*vp).position(j,i)<<',';
-            }
-            cout<<'\n';
-        }
-        cout<<'\n';
-        k++;
-        (*vp).moveall();
-        usleep(300000);
-    }
-    while(k<50);
+	start(argc, argv) ;
+	
     return 0;
 }
 
