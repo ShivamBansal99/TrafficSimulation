@@ -138,8 +138,9 @@ int main(int argc, char** argv) {
     vehicle *vehcl = new vehicle[100];
     int vehcl_count=0;
 	scan(spec,types,seconds) ;
-        (*vp).roadlength=spec[0][1]/50;
-        (*vp).roadwidth=spec[0][2]*spec[0][3]/10;
+        (*vp).roadlength=spec[0][1];
+        (*vp).roadwidth=spec[0][2]*spec[0][3];
+        (*vp).redline=spec[0][4];
             loop(i,spec.size()) {
                 
                 if(i>=3){
@@ -166,7 +167,6 @@ int main(int argc, char** argv) {
     (*vp).setRedLight(1);
     int readline=1;
     int end=0;
-    
     int stop_time=0;
 	 do
     {
@@ -181,7 +181,7 @@ int main(int argc, char** argv) {
                 end=1;
             }else{
                 loop(i,specs_count){
-                    cout<<specific[i].name<<'\n';
+                    //cout<<specific[i].name<<'\n';
                     if(specific[i].name==seconds[readline][0]){
                         if((*vp).availy(specific[i].width)!=-100){
                             vehcl[vehcl_count].new_vehicle(&specific[i],seconds[readline][1],-specific[i].length+1,(*vp).availy(specific[i].width),1);
@@ -212,12 +212,20 @@ int main(int argc, char** argv) {
         }
         for(int i=0;i<(*vp).roadwidth;i++){
             for(int j=0;j<(*vp).roadlength;j++){
-                cout<<(*vp).position(j,i)<<',';
+                cout<<(*vp).position(j,i);
             }
             cout<<'\n';
         }
         cout<<'\n';
+        cout<<"time "<<k<<'\n';
         k++;
+        loop(i,2){
+        for(int j=0;j<(*vp).roadlength;j++){
+                cout<<'-';
+        }
+        }
+        cout<<'\n';
+        
         (*vp).moveall();
         usleep(30000);
        // cout<<empty<<' '<<end<<'\n';
