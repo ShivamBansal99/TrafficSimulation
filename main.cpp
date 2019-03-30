@@ -138,9 +138,9 @@ int main(int argc, char** argv) {
     vehicle *vehcl = new vehicle[100];
     int vehcl_count=0;
 	scan(spec,types,seconds) ;
-        (*vp).roadlength=spec[0][1];
-        (*vp).roadwidth=spec[0][2]*spec[0][3];
-        (*vp).redline=spec[0][4];
+        (*vp).roadlength=spec[0][1]/50;
+        (*vp).roadwidth=spec[0][2]*spec[0][3]/10;
+        (*vp).redline=spec[0][4]/50;
             loop(i,spec.size()) {
                 
                 if(i>=3){
@@ -227,7 +227,7 @@ int main(int argc, char** argv) {
         cout<<'\n';
         
         (*vp).moveall();
-        usleep(30000);
+        usleep(60000);
        // cout<<empty<<' '<<end<<'\n';
         
     }

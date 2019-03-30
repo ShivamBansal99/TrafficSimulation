@@ -23,6 +23,7 @@ public:
     void addVehicle(vehicle* v);
     int availy(int width);
     bool availornot(int xleft,int xright,int yup,int ydown);
+    int availornotx(int xleft,int xright,int yup,int ydown);
     char position(int x, int y);
     void moveall();
     void setRedLight(int i);

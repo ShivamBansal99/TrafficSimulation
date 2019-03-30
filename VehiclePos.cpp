@@ -12,9 +12,9 @@
  */
 
 #include <string>
-
+#include <bits/stdc++.h>
 #include "VehiclePos.h"
-
+using namespace std;
 VehiclePos::VehiclePos(int redline, int roadwidth,int roadlength) {
     VehiclePos::redline=redline;
     VehiclePos::roadwidth=roadwidth;
@@ -27,6 +27,17 @@ void VehiclePos::addVehicle(vehicle* v){
 //TODO: avail or not to be completed
 void VehiclePos::setRedLight(int i){
     VehiclePos::redlight=i;
+}
+int VehiclePos::availornotx(int xleft,int xright,int yup,int ydown){
+    int dist=xright;
+    for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
+        if( ((( (*(*it)).posx  < xright ) && ( (*(*it)).posy + (*(*it)).width > yup )) && (( (*(*it)).posx+ (*(*it)).length  > xleft ) && ( (*(*it)).posy   < ydown ))) || ((yup  <0 )) || (ydown>VehiclePos::roadwidth) ) {
+            if(dist>(*(*it)).posx) dist=(*(*it)).posx ;
+        }else if( (xright>VehiclePos::redline && VehiclePos::redlight==1)){
+            if(dist>VehiclePos::redline) dist=VehiclePos::redline ;
+        }
+    }
+    return dist;
 }
 bool VehiclePos::availornot(int xleft,int xright,int yup,int ydown){
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
@@ -67,9 +78,12 @@ char VehiclePos::position(int x,int y){
 
 void VehiclePos::moveall(){
     for(auto it= VehiclePos::allvehicles.begin();it!=VehiclePos::allvehicles.end();it++){
+        (*it)->accelerate();
         int nextx=(*(*it)).posx+ (*(*it)).length+(*(*it)).speed*(*(*it)).time;
-        if(VehiclePos::availornot((*(*it)).posx+ (*(*it)).length,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width) ) {
-            (*(*it)).movex();
+        int avail = VehiclePos::availornotx((*(*it)).posx+ (*(*it)).length,nextx,(*(*it)).posy,(*(*it)).posy+(*(*it)).width);
+        cout<<(*it)->name<<(*it)->speed<<endl;
+        if(avail>(*(*it)).posx + (*(*it)).length ) {
+            (*(*it)).movex(avail);
             (*it)->movingLeft=0;
         }
         else{
@@ -80,7 +94,7 @@ void VehiclePos::moveall(){
                 int nexty=(*(*it)).posy+(*(*it)).width+1;
                 srand(time(0));
                 if(rand()%250<200 ) {
-                    if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty-1,nexty) ) {
+                    if(VehiclePos::availornot((*(*it)).posx,(*(*it)).posx+(*(*it)).length,nexty-1,nexty)  ) {
                         (*(*it)).movey(1);
                     }else{
                         nexty=(*(*it)).posy;

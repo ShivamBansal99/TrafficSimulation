@@ -51,14 +51,18 @@ vehicle::vehicle() {
 vehicle::~vehicle() {
 }
 
-void vehicle::movex() {
-    vehicle::posx+=vehicle::speed*vehicle::time;
+void vehicle::accelerate() {
     if(vehicle::speed<vehicle::maxvel){
         vehicle::speed+=vehicle::acc*vehicle::time;
     }
     if(vehicle::speed>vehicle::maxvel){
         vehicle::speed=vehicle::maxvel;
     }
+}
+void vehicle::movex(int avail) {
+    int old = vehicle::posx;
+    vehicle::posx=avail-vehicle::length;
+    vehicle::speed=1+((vehicle::posx-old)/(vehicle::time));
 }
 
 void vehicle::movey(int y) {

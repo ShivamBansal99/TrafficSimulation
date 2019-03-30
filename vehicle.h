@@ -23,7 +23,8 @@ public:
     void new_vehicle(specs* s,string color,int posx,int posy,int speed);
     virtual ~vehicle();
     vehicle();
-    void movex();
+    void movex(int x);
+    void accelerate();
     void movey(int y);
     string color;
     string name;
